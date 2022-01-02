@@ -56,7 +56,7 @@ public:
     // Plotte eine Weg-Zeit-Übersicht und den Geschwindigkeitsverlauf
     void Plot(std::size_t& iter);
 
-    // Siche die Daten in ener Datei
+    // Siche die Daten in einer Datei
     void Store(std::size_t& iter);
 
 private:

@@ -15,11 +15,14 @@ namespace TestSet
     constexpr double dt { 0.1 };    // 100ms
     
     // PT2-Werte des Feder-Dämpfer-Systems
-    constexpr double m { 1000.0 };
-    constexpr double r { 70 };
-    constexpr double c { 1 };
+    constexpr double par_m { 1000.0 };
+    constexpr double par_r { 70 };
+    constexpr double par_c { 1 };
     
     // Das Objekt
+    Device device { velocity_target, velocity_stddev, 
+                    dt,
+                    par_m, par_r, par_c};
     
     // Testlauf
     constexpr double time { 15.0 }; // 10s
@@ -30,11 +33,13 @@ namespace TestSet
 void Monitor_TrainDrive(std::size_t& iter)
 {
     // Der Zug
-    //Device& train { TestSet::device };
+    Device& train { TestSet::device };
 
     // 1.1. - Berechne die Soll-Geschwindigkeit (Rampe)
+    train.Calculate_Target_Velocity();
     
     // 1.2. - Berechne die Ist-Geschwindigkeit (PT2)
+    train.Calculate_Device_Velocity();
 
     // 1.3. - Messe die Geschwindigkeit
     //train.Measure_Velocity();
@@ -56,5 +61,5 @@ int main(int, char**)
     // Der Zug, ein Shinkansen beschleunigt vo 0 auf eine mittlere Geschwindigkeit von 80m/s.
     // Das Monitorgerät soll aus der Geschwindigkeit die aktuelle Position berechnen;
     // Geschwindigkeits- und Positionsverlauf anzeigen.
-    //Drive_Train(TestSet::counter, TestSet::samples, Monitor_TrainDrive);
+    Drive_Train(TestSet::counter, TestSet::samples, Monitor_TrainDrive);
 }

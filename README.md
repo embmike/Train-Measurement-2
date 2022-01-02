@@ -44,34 +44,30 @@ Datei main.cpp:
 ```C++
 //...
 
+#define Drive_Train for_each_iter
+
 //Erstelle Device und lege Parameter fest
 namespace TestSet
 {
-    // Geschwindkeit und Standardabweichung
-    constexpr double velocity_target { 80.0 }; // m/s
-    constexpr double velocity_stddev { 1.6 };  // %
-    
-    // Abtastung
-    constexpr double dt { 0.1 };    // 100ms
-    
-    // PT2-Werte des Feder-Dämpfer-Systems
-    constexpr double par_m { 1000.0 };
-    constexpr double par_r { 70 };
-    constexpr double par_c { 1 };
+	// ...
     
     // Das Objekt
-    
-    // Testlauf
-    constexpr double time { 15.0 }; // 10s
-    constexpr std::size_t samples { static_cast<uint32_t>(time / dt) };
-    std::size_t counter { 0 };
+    Device device { velocity_target, velocity_stddev, 
+                    dt,
+                    par_m, par_r, par_c};
+    // ...
 }
 
 void Monitor_TrainDrive(std::size_t& iter)
 {
+    // Der Zug
+    Device& train { TestSet::device };
+
     // 1.1. - Berechne die Soll-Geschwindigkeit (Rampe)
+    train.Calculate_Target_Velocity();
     
     // 1.2. - Berechne die Ist-Geschwindigkeit (PT2)
+    train.Calculate_Device_Velocity();
     
     // 1.3. - Messe die Geschwindigkeit
 
@@ -87,6 +83,7 @@ int main(int, char**)
     // Der Zug, ein Shinkansen beschleunigt vo 0 auf eine mittlere Geschwindigkeit von 80m/s.
     // Das Monitorgerät soll aus der Geschwindigkeit die aktuelle Position berechnen;
     // Geschwindigkeits- und Positionsverlauf anzeigen.
+    Drive_Train(TestSet::counter, TestSet::samples, Monitor_TrainDrive);
 }
 
 // ...
@@ -96,7 +93,7 @@ int main(int, char**)
 
 ### <span id="link4">2.4. Deklariere die Schnittstelle</span>
 
-*Nun erfolgt der Rohbau. Der Softwerker deklariert die neue Schnistelle durch Funktionen.*
+*Nun erfolgt der Rohbau. Der Softwerker deklariert die neue Schnittstelle durch Funktionen.*
 
 Datei matrix.hpp:
 
@@ -162,6 +159,9 @@ public:
 
     // Plotte eine Weg-Zeit-Übersicht und den Geschwindigkeitsverlauf
     void Plot(std::size_t& iter);
+    
+    // Siche die Daten in einer Datei
+    void Store(std::size_t& iter);
 
 private:
     Device() = delete;
@@ -179,46 +179,23 @@ private:
 *Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen durch Funktionsrümpfe.
 Jede Funktion setzt einen Zustand. Die Funktionen werden in der "Main"-Funktion geordnet aufgerufen*
 
-*Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der Schnittstelle mittels der Zustände im Debugger.*
+*Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der neuen Schnittstelle mittels der Zustände im Debugger.*
 
 Datei device.cpp:
 
 ```C++
 // ...
 
-Device::Device(double speed_mean, double speed_stddev, double dt)
+double Device::Calculate_Target_Velocity()
 {
-    _state = DeviceState::INITILIZED;
+    _state = DeviceState::TARGET_VELOCITY_CALCULATED;
+    return 0.0;
 }
 
-
-double Device::Measure_Velocity()
+double Device::Calculate_Device_Velocity()
 {
-    _state = DeviceState::MEASURED;
-
-    return 1.0;
-}
-
-
-double Device::Filter_Velocity()
-{
-    _state = DeviceState::FILTERED;
-
-    return 2.0;
-}
-
-
-double Device::Calculate_Position()
-{
-    _state = DeviceState::CALCULATED;
-
-    return 3.0;
-}
-
-
-void Device::Plot()
-{
-    _state = DeviceState::PLOTTED;
+    _state = DeviceState::ACTUAL_VELOCITY_CALCULATED;
+    return 0.0;
 }
 
 // ....
