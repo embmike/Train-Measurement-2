@@ -8,8 +8,6 @@ Im ersten Projekt **Train-Measurement** fuhr der Zug mit einer festen Geschwindi
 
 <img src="./images/block_diagram.png" alt="Blockschaltbild" width="100%" height="100%" />
 
-<!-- <img src="./images/block_diagram.png" alt="Blockschaltbild" width="50%" height="50%" />   -->
-
 <br>
 <br>
 
@@ -256,22 +254,30 @@ int main(int, char**)
 
 ### <span id="link6">2.6. Definiere alle Funktionen</span>
 
-*Beim Innausbau erstellt jedes Gewerk seine Einrichungen, der Rohrleger verlegt die Fussbodenheizung, der Elektriker die Kabel. 
+*Beim Innausbau erstellt jedes Gewerk seine Einrichungen, der Installateur verlegt die Fussbodenheizung, der Elektriker die Kabel. 
 Analog impementiert der Softwerker seine Funktionen*
 
-Die Implementierung erfolt in kompakter funktionsorientierter Form, für Schleifen werden Funktionen gewählt - siehe Beispiele:
+Die Implementierung der neuen Schnittstelle erfolgt in kompakter funktionsorientierter Form, für Schleifen werden Funktionen gewählt - siehe Beispiele:
 
-Datei functional_iter.cpp
+Datei matrix.hpp
 
 ```C++
 // ...
 
-void for_each_iter(std::size_t& iter, const size_t size, std::function<void(std::size_t&)> fn)
+// Vektoraddition: Vektor 1 + Vektor 2
+template <typename T, std::size_t SIZE>
+std::array< T, SIZE>  vvadd(std::array< T, SIZE> v1, std::array< T, SIZE> v2)
 {
-    for(; iter < size; iter++)
+    static_assert(v1.size() == v2.size(), "The vectors are not the same size.");
+
+    std::array<T, SIZE> result { 0 };
+
+    for(std::size_t i = 0; i < v1.size(); i++)
     {
-        fn(iter);
-    }   
+        result[i] = v1[i] + v2[i];
+    }
+
+    return result;
 }
 
 // ..
@@ -284,28 +290,29 @@ Datei device.cpp
 ```C++
 // ...
 
-double Device::Filter_Velocity()
+double Device::Calculate_Device_Velocity()
 {
-    // Gleitender Mittelwertfilter
-    std::rotate(_filterValues.rbegin(), _filterValues.rbegin() + 1, _filterValues.rend());
-    _filterValues.at(0) = _measurement;
-    Set_Velocity(std::accumulate(_filterValues.begin(), _filterValues.end(), 0) / _filterValues.size());
+    // x(k+1) = A * x(k) + b * u(k)
+    _pose_PT2_x = vvadd( mvmul(_system_PT2_A, _pose_PT2_x), vsadd(_input_PT2_b, _velocity_ramp) );
 
-    _state = DeviceState::FILTERED;
-    return Get_Velocity();
+    _state = DeviceState::ACTUAL_VELOCITY_CALCULATED;
+    return Get_PT2_Velocity();
 }
-
-<br>
 
 // ...
 ```
 
-Für die Berechnung der neuen Position wird Matrizenberechnung verwendet:
+<br>
 
-<img src="./images/system_equation.png" alt="Sytemgleichung" width="40%" height="40%"/> 
+Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verwendet.
 
-<!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="50%" height="50%" style="float:left" /> -->
-<!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="25%" height="25%" /> -->
+**PT2**
+<img src="./images/system_equation2.png" alt="Sytemgleichung" width="75%" height="75%"/> 
+
+**Position**
+<img src="./images/system_equation1.png" alt="Sytemgleichung" width="40%" height="40%"/>
+
+<br>
 
 ```C++
 // ...
@@ -340,8 +347,11 @@ Debuggen durh die Applikation:
 
 Das Programm speichert während des Testlaufs Daten:
 -   time
--   measurement
--   velocity
+-   jerk (PT2)
+-   accelaration (PT2)
+-   velocity (PT2)
+-   velocity_m
+-   velocity_f
 -   position
 
 in die Messdatei log_data.csv. Das Python-Script **data_analysis.py** stellt die Daten grafisch dar:

@@ -7,39 +7,56 @@
 Device::Device( double velocity_target, // m/s
                 double velocity_stddev, // %
                 double dt,			    // s
+                double dv,			    // m/s
                 double par_m,
                 double par_r,
                 double par_c)
 {
+        // Sollgeschwindigkeit
+    _velocity_target = velocity_target;
+    _velocity_stddev = velocity_stddev;
+
     // Zufallsgenerator für die Geschwindigkeitsmessung
     std::random_device rd {};
 	_generator = std::mt19937 {rd()};
-	//_distribution = std::normal_distribution<double> {vel_mean, vel_stddev};
 
     // Initialisiere Filter mit dem Mittelwert
-    std::for_each(_filterValues.begin(), _filterValues.end(), [&velocity_target](double& d){d = velocity_target;});
+    std::for_each(_filterValues.begin(), _filterValues.end(), [&velocity_target](double& d){d = 0.0;});
 
     // Abtastrate
     _dt = dt;
 
+    // Rampenrate
+    _dv = dv;
+
+    // PT2
     // Systemnatix A
-    _system_A = {{
+    _system_PT2_A = {{
+        {0.0, -par_r/par_m, -par_c/par_m}, 
+        { dt,          1.0,          0.0},
+        {0.0,           dt,          1.0} 
+    }};
+
+    // Eingangsvektor b
+    _input_PT2_b = {
+        1.0/par_m,
+        0.0,
+        0.0
+    };
+
+    // Position
+    // Systemnatix A
+    _system_Pos_A = {{
         {1.0,  dt},
         {0.0, 1.0}
     }};
-
-    // Initialisiere Zustandsvektor x = (position, velocity)
-    _pose_x = {
-        0.0,
-        velocity_target
-    };
 
     _logDataStream.open(LOG_DATA_PATH.data(), std::ofstream::out);
     if (_logDataStream.fail() or !_logDataStream.is_open())
     {
         std::cerr << "Log file could not open!" << std::endl;
     }
-    _logDataStream << "time,measurement,velocity,position" << std::endl;
+    _logDataStream << "time,velocity_s,jerk,acceleration,velocity,velocity_m,velocity_f,position" << std::endl;
 
     _state = DeviceState::INITILIZED;
 }
@@ -52,22 +69,36 @@ Device::~Device()
 
 double Device::Calculate_Target_Velocity()
 {
+    if (_velocity_ramp < _velocity_target)
+    {
+        _velocity_ramp += _dv;    
+    }
+
     _state = DeviceState::TARGET_VELOCITY_CALCULATED;
-    return 0.0;
+    return _velocity_ramp;
 }
 
 double Device::Calculate_Device_Velocity()
 {
+    // x(k+1) = A * x(k) + b * u(k)
+    _pose_PT2_x = vvadd( mvmul(_system_PT2_A, _pose_PT2_x), vsmul(_input_PT2_b, _velocity_ramp) );
+
     _state = DeviceState::ACTUAL_VELOCITY_CALCULATED;
-    return 0.0;
+    return Get_PT2_Velocity();
 }
 
 double Device::Measure_Velocity()
 {
-    _measurement = _distribution(_generator);
+    _distribution = std::normal_distribution<double> {Get_PT2_Velocity(), Get_PT2_Velocity() * _velocity_stddev};
+    _measuredVelocity = _distribution(_generator);
+
+    if (_measuredVelocity < 0.0)
+    {
+        _measuredVelocity = 0.0;
+    }
 
     _state = DeviceState::VELOCITY_MEASURED;
-    return _measurement;
+    return _measuredVelocity;
 }
 
 
@@ -75,7 +106,7 @@ double Device::Filter_Velocity()
 {
     // Gleitender Mittelwertfilter
     std::rotate(_filterValues.rbegin(), _filterValues.rbegin() + 1, _filterValues.rend());
-    _filterValues.at(0) = _measurement;
+    _filterValues.at(0) = _measuredVelocity;
     Set_Velocity(std::accumulate(_filterValues.begin(), _filterValues.end(), 0) / _filterValues.size());
 
     _state = DeviceState::VELOCITY_FILTERED;
@@ -86,7 +117,7 @@ double Device::Filter_Velocity()
 double Device::Calculate_Position()
 {
     // Berechne die neue Position x(p) = A * x
-    _pose_x = mvmul(_system_A, _pose_x);
+    _pose_Pos_x = mvmul(_system_Pos_A, _pose_Pos_x);
 
     _state = DeviceState::POSITION_ESTIMATED;
     return Get_Position();
@@ -95,8 +126,19 @@ double Device::Calculate_Position()
 
 void Device::Plot(std::size_t& iter)
 {
-    std::cout << std::setprecision(1) << std::fixed << iter * _dt << " s: "
-              << "v=" << Get_Velocity() << " m/s"
+    std::cout << std::setprecision(1) << std::fixed << (iter + 1) * _dt << " s: "
+              << std::setprecision(6) << std::fixed
+              << "vs=" << _velocity_ramp << " m/s"
+              << " / "
+              << "r=" << Get_PT2_Jerk() << " m/s³"
+              << " / "
+              << "a=" << Get_PT2_Accelaration() << " m/s²"
+              << " / " 
+              << "v=" << Get_PT2_Velocity() << " m/s"
+              << " / " 
+              << "vm=" << _measuredVelocity << " m/s"
+              << " / " 
+              << "vf=" << Get_Velocity() << " m/s"
               << " / " 
               << "s=" << std::setw(5) << std::setfill(' ') << Get_Position() << " m\n";
 
@@ -106,8 +148,13 @@ void Device::Plot(std::size_t& iter)
 
 void Device::Store(std::size_t& iter)
 {
-    _logDataStream << std::setprecision(1) << std::fixed << iter * _dt
-                   << "," << _measurement
+    _logDataStream << std::setprecision(1) << std::fixed << (iter + 1) * _dt
+                   << std::setprecision(6) << std::fixed
+                   << "," << _velocity_ramp
+                   << "," << Get_PT2_Jerk()
+                   << "," << Get_PT2_Accelaration()
+                   << "," << Get_PT2_Velocity()
+                   << "," << _measuredVelocity
                    << "," << Get_Velocity() 
                    << "," << Get_Position()
                    << std::endl;

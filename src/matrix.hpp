@@ -4,18 +4,6 @@
 #include <cstddef>
 #include <array>
 
-template <typename T, std::size_t SIZE>
-std::array< T, SIZE>  vsadd(std::array< T, SIZE> v, T s)
-{
-    std::array<T, SIZE> result { 0 };
-
-    for(std::size_t i = 0; i < v.size(); i++)
-    {
-        result[i]= v[i] + s;
-    }
-
-    return result;
-}
 
 // Vektoraddition: Vektor 1 + Vektor 2
 template <typename T, std::size_t SIZE>
@@ -28,6 +16,20 @@ std::array< T, SIZE>  vvadd(std::array< T, SIZE> v1, std::array< T, SIZE> v2)
     for(std::size_t i = 0; i < v1.size(); i++)
     {
         result[i] = v1[i] + v2[i];
+    }
+
+    return result;
+}
+
+// Vektormultiplikation: Vektor * Skalar
+template <typename T, std::size_t SIZE>
+std::array< T, SIZE>  vsmul(std::array< T, SIZE> v, T s)
+{
+    std::array<T, SIZE> result { 0 };
+
+    for(std::size_t i = 0; i < v.size(); i++)
+    {
+        result[i]= v[i] * s;
     }
 
     return result;
