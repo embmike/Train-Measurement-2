@@ -283,6 +283,12 @@ std::array< T, SIZE>  vvadd(std::array< T, SIZE> v1, std::array< T, SIZE> v2)
 
 <br>
 
+Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verwendet.
+
+**PT2**
+<br>
+<img src="./images/system_equation2.png" alt="Sytemgleichung" width="75%" height="75%"/> 
+
 Datei device.cpp
 
 ```C++
@@ -301,14 +307,6 @@ double Device::Calculate_Device_Velocity()
 ```
 
 <br>
-
-Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verwendet.
-
-**PT2**
-<br>
-<img src="./images/system_equation2.png" alt="Sytemgleichung" width="75%" height="75%"/> 
-
-
 
 **Position**
 <br>
@@ -367,7 +365,6 @@ in die Messdatei log_data.csv. Das Python-Script **data_analysis.py** stellt die
 Der Mittelwertfilter liefert bereits ein brauchbares Ergebnis. :satisfied:
 
 <br>
-<br>
 
 ## 4. Unit-Test
 
@@ -379,7 +376,6 @@ Für die Unit-Tests wird GoogleTest verwendet, welches auch durch CTest ausgefü
 <img src="./images/unit_test.png" alt="Sytemgleichung" width="90%" height="90%"/> 
 
 <br>
-<br>
 
 ## 5. Versionsmanagement mit Git
 
@@ -389,14 +385,12 @@ die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichte
 ![Debug-Image](./images/git_view.png)
 
 <br>
-<br>
 
 ## 6. Fazit und Ausblick
 
 Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich.
 Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
 
-<br>
 <br>
 
 ## Licence
