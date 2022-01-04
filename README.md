@@ -282,14 +282,13 @@ std::array< T, SIZE>  vvadd(std::array< T, SIZE> v1, std::array< T, SIZE> v2)
 ```
 
 <br>
+Datei device.cpp
 
 Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verwendet.
 
 **PT2**
 <br>
 <img src="./images/system_equation2.png" alt="Sytemgleichung" width="75%" height="75%"/> 
-
-Datei device.cpp
 
 ```C++
 // ...
