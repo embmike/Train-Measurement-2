@@ -9,7 +9,6 @@ Im ersten Projekt **Train-Measurement** fuhr der Zug mit einer festen Geschwindi
 <img src="./images/block_diagram.png" alt="Blockschaltbild" width="100%" height="100%" />
 
 <br>
-<br>
 
 ## 2. Entwicklungsschritte
 
@@ -23,7 +22,6 @@ Entwicklungsschritte sind:
 -   2.7. Definiere zu jeder Funktion ein Unit-Test
 -	2.8. Dokumentation (Dateien und md-Datei) abschließen
 
-<br>
 <br>
 
 ### <span id="link3">2.3. Schreibe die einzelnen Arbeitsschritte des BSD auf</span>
@@ -306,8 +304,12 @@ double Device::Calculate_Device_Velocity()
 
 Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verwendet.
 
+
+
 **PT2**
 <img src="./images/system_equation2.png" alt="Sytemgleichung" width="75%" height="75%"/> 
+
+
 
 **Position**
 <img src="./images/system_equation1.png" alt="Sytemgleichung" width="40%" height="40%"/>
@@ -329,7 +331,6 @@ double Device::Calculate_Position()
 // ...
 ```
 
-<br>
 <br>
 
 ## 3. Debuggen
