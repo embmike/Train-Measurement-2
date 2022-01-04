@@ -304,14 +304,14 @@ double Device::Calculate_Device_Velocity()
 
 Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verwendet.
 
-
-
 **PT2**
+<br>
 <img src="./images/system_equation2.png" alt="Sytemgleichung" width="75%" height="75%"/> 
 
 
 
 **Position**
+<br>
 <img src="./images/system_equation1.png" alt="Sytemgleichung" width="40%" height="40%"/>
 
 <br>
