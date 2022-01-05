@@ -296,7 +296,7 @@ Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verw
 double Device::Calculate_Device_Velocity()
 {
     // x(k+1) = A * x(k) + b * u(k)
-    _pose_PT2_x = vvadd( mvmul(_system_PT2_A, _pose_PT2_x), vsadd(_input_PT2_b, _velocity_ramp) );
+    _pose_PT2_x = vvadd( mvmul(_system_PT2_A, _pose_PT2_x), vsmul(_input_PT2_b, _velocity_ramp) );
 
     _state = DeviceState::ACTUAL_VELOCITY_CALCULATED;
     return Get_PT2_Velocity();
