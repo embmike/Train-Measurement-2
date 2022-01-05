@@ -32,13 +32,14 @@ Device::Device( double velocity_target, // m/s
 
     // PT2
     // Systemnatix A
+    double a2 =  0.5 * pow(dt, 2);
     double a1 = -par_r / (par_m * dt);
     double a0 = -par_c / (par_m * pow(dt, 2));
 
     _system_PT2_A = {{
         {0.0,  a1,  a0}, 
         { dt, 1.0, 0.0},
-        {0.0,  dt, 1.0} 
+        { a2,  dt, 1.0} 
     }};
 
     // Eingangsvektor b

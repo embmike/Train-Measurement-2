@@ -288,7 +288,7 @@ Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verw
 
 **PT2**
 <br>
-<img src="./images/system_equation2.png" alt="Sytemgleichung" width="90%" height="90%"/> 
+<img src="./images/system_equation1.png" alt="Sytemgleichung" width="90%" height="90%"/> 
 
 ```C++
 // ...
@@ -309,7 +309,7 @@ double Device::Calculate_Device_Velocity()
 
 **Position**
 <br>
-<img src="./images/system_equation1.png" alt="Sytemgleichung" width="40%" height="40%"/>
+<img src="./images/system_equation2.png" alt="Sytemgleichung" width="55%" height="55%"/>
 
 <br>
 
