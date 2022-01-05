@@ -15,8 +15,8 @@ namespace TestSet
     constexpr double dt { 0.1 };    // 100ms
     
     // PT2-Werte des Feder-Dämpfer-Systems
-    constexpr double par_m { 1000.0 };
-    constexpr double par_r { 70 };
+    constexpr double par_m { 200000.0 };
+    constexpr double par_r { 700 };
     constexpr double par_c { 1 };
 
     // Rampen für 3min

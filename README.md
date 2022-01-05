@@ -32,7 +32,7 @@ Schreibe den Ablauf des Blockschaltbilds in kommentarform auf:
 -   Definere das Testset. 
     -   Ein stehender Zug beschleunigt gemäß Sollvorgabe auf eine Zielgeschwindigkeit Geschwindigkeit.
     -   Ein Messgerät misst die Geschwindigkeit und ermittelt daraus die aktuelle Position. 
--   Die Messung soll 15s mit einer Auflösung von 100ms dauern.
+-   Die Messung soll 500s mit einer Auflösung von 100ms dauern.
 -   Für die Iteration der Abtaswerte soll die "for_each_iter"-Funktion verwendet werden.
 
 
@@ -288,7 +288,7 @@ Für die Berechnung des PT2s und der neuen Position wird Matrizenberechnung verw
 
 **PT2**
 <br>
-<img src="./images/system_equation2.png" alt="Sytemgleichung" width="75%" height="75%"/> 
+<img src="./images/system_equation2.png" alt="Sytemgleichung" width="90%" height="90%"/> 
 
 ```C++
 // ...

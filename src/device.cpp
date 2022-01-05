@@ -2,6 +2,7 @@
 #include "matrix.hpp"
 #include <iostream>
 #include <iomanip>
+#include <math.h>
 
 
 Device::Device( double velocity_target, // m/s
@@ -31,15 +32,20 @@ Device::Device( double velocity_target, // m/s
 
     // PT2
     // Systemnatix A
+    double a1 = -par_r / (par_m * dt);
+    double a0 = -par_c / (par_m * pow(dt, 2));
+
     _system_PT2_A = {{
-        {0.0, -par_r/par_m, -par_c/par_m}, 
-        { dt,          1.0,          0.0},
-        {0.0,           dt,          1.0} 
+        {0.0,  a1,  a0}, 
+        { dt, 1.0, 0.0},
+        {0.0,  dt, 1.0} 
     }};
 
     // Eingangsvektor b
+    double b0 = 1.0 / (par_m * pow(dt, 2));
+
     _input_PT2_b = {
-        1.0/par_m,
+         b0,
         0.0,
         0.0
     };
