@@ -15,7 +15,7 @@ Im ersten Projekt **Train-Measurement** fuhr der Zug mit einer festen Geschwindi
 Entwicklungsschritte sind:
 -	2.1. Formuliere die Idee mittels Blockschaltbild (BSB)
 -	2.2. Erstelle ein C++-Projekt in Visual Studio Code
--	2.3. Schreibe die einzelnen [Arbeitsschritte](#link3) des BSD auf
+-	2.3. Schreibe die einzelnen [Arbeitsschritte](#link3) des BSB auf
 -   2.4. Deklariere die [Schnittstelle](#link4)
 -   2.5. Definiere die [Funktionsrümpfe](#link5) und rufe die Schnittstelle auf
 -   2.6. Definiere alle [Funktionen](#link6)
@@ -24,9 +24,9 @@ Entwicklungsschritte sind:
 
 <br>
 
-### <span id="link3">2.3. Schreibe die einzelnen Arbeitsschritte des BSD auf</span>
+### <span id="link3">2.3. Schreibe die einzelnen Arbeitsschritte des BSB auf</span>
 
-*Wie bei einem Hausbau zeichnet zuerst ein Architekt das Haus. Der Softwerker pinselt ein Blockschaltbild seiner Idee.*
+*Analog zum Hausbau zeichnet zuerst ein Architekt das Haus. Der Softwerker pinselt ein Blockschaltbild seiner Idee.*
 
 Schreibe den Ablauf des Blockschaltbilds in kommentarform auf:
 -   Definere das Testset. 
@@ -354,7 +354,7 @@ Das Programm speichert während des Testlaufs Daten:
 
 in die Messdatei log_data.csv. Das Python-Script **data_analysis.py** stellt die Daten grafisch dar:
 
-*PT2-Modell: Die Geschwindigkeit ist die Übertragungsfunktion und die Beschleunigung die Gewichtsfuntion.*
+*PT2-Modell: Die Geschwindigkeit ist die Übertragungsfunktion und die Beschleunigung die Gewichtsfunktion.*
 
 ![Zugposition](./images/pt2_fig.png)
 
@@ -391,8 +391,7 @@ die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichte
 
 ## 6. Fazit und Ausblick
 
-Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich.
-Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
+Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich. Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
 
 <br>
 
