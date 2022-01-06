@@ -354,6 +354,10 @@ Das Programm speichert während des Testlaufs Daten:
 
 in die Messdatei log_data.csv. Das Python-Script **data_analysis.py** stellt die Daten grafisch dar:
 
+*PT2-Modell: Die Geschwindigkeit ist die Übertragungsfunktion und die Beschleunigung die Gewichtsfuntion.*
+
+![Zugposition](./images/pt2_fig.png)
+
 
 ![Zugposition](./images/velocity_fig.png)
 
