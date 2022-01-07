@@ -391,7 +391,7 @@ die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichte
 
 ## 6. Fazit und Ausblick
 
-Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich. Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
+Das PT2 zeigt eine gute Modellierung der Zugdynamik. Die PT2-Messung zeigt beim Ruck, bei ca. 180s eine Unstetigkeitsstelle und damit ein mögliches Komfortproblem. Deshalb ist es angebracht, die Rampe durch ein PT1 zu ersetzen. Der gleitende Mittelwertfilfilter zeigt im stationären Bereich eine brauchbares Verhalten, aber im instationären Bereich sind deutlich Stufen in der Geschwindigkeit (Übertragungsfunktion) zu erkennen. wie wäre es, dafür ein Kalmanfilter zu verwenden.
 
 <br>
 
