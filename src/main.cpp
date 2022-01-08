@@ -28,7 +28,7 @@ namespace TestSet
                     par_m, par_r, par_c};
     
     // Testlauf
-    constexpr double time { 500.0 }; // 10s
+    constexpr double time { 500.0 }; // s
     constexpr std::size_t samples { static_cast<uint32_t>(time / dt) };
     std::size_t counter { 0 };
 }
