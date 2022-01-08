@@ -253,7 +253,7 @@ int main(int, char**)
 ### <span id="link6">2.6. Definiere alle Funktionen</span>
 
 *Beim Innausbau erstellt jedes Gewerk seine Einrichungen, der Installateur verlegt die Fussbodenheizung, der Elektriker die Kabel. 
-Analog impementiert der Softwerker seine Funktionen*
+Analog implementiert der Softwerker seine Funktionen*
 
 Die Implementierung der neuen Schnittstelle erfolgt in kompakter funktionsorientierter Form, für Schleifen werden Funktionen gewählt - siehe Beispiele:
 
