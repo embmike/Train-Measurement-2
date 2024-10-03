@@ -28,7 +28,7 @@ Entwicklungsschritte sind:
 
 *Analog zum Hausbau zeichnet zuerst ein Architekt das Haus. Der Softwerker pinselt ein Blockschaltbild seiner Idee.*
 
-Schreibe den Ablauf des Blockschaltbilds in kommentarform auf:
+Schreibe den Ablauf des Blockschaltbilds in Kommentarform auf:
 -   Definere das Testset. 
     -   Ein stehender Zug beschleunigt gemäß Sollvorgabe auf eine Zielgeschwindigkeit Geschwindigkeit.
     -   Ein Messgerät misst die Geschwindigkeit und ermittelt daraus die aktuelle Position. 
@@ -172,7 +172,7 @@ private:
 
 ### <span id="link5">2.5. Definiere die Funktionsrümpfe und rufe die Schnittstelle auf</span>
 
-*Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen durch Funktionsrümpfe.
+*Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funktionen durch Funktionsrümpfe.
 Jede Funktion setzt einen Zustand. Die Funktionen werden in der "Main"-Funktion geordnet aufgerufen*
 
 *Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der neuen Schnittstelle mittels der Zustände im Debugger.*
