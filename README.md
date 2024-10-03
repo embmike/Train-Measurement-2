@@ -29,11 +29,11 @@ Entwicklungsschritte sind:
 *Analog zum Hausbau zeichnet zuerst ein Architekt das Haus. Der Softwerker pinselt ein Blockschaltbild seiner Idee.*
 
 Schreibe den Ablauf des Blockschaltbilds in Kommentarform auf:
--   Definere das Testset. 
+-   Definiere das Testset. 
     -   Ein stehender Zug beschleunigt gemäß Sollvorgabe auf eine Zielgeschwindigkeit Geschwindigkeit.
     -   Ein Messgerät misst die Geschwindigkeit und ermittelt daraus die aktuelle Position. 
 -   Die Messung soll 500s mit einer Auflösung von 100ms dauern.
--   Für die Iteration der Abtaswerte soll die "for_each_iter"-Funktion verwendet werden.
+-   Für die Iteration der Abtastwerte soll die "for_each_iter"-Funktion verwendet werden.
 
 
 Datei main.cpp:
@@ -69,14 +69,14 @@ void Monitor_TrainDrive(std::size_t& iter)
 
     // 1.4. - Filtere die Geschwindigkeit
 
-    // 1.5. - Brechne den Weg
+    // 1.5. - Berechne den Weg
 
     // 1.6. - Plotte eine Weg-Zeit-Übersicht und den Geschwindigkeitsverlauf
 }
 
 int main(int, char**)
 {
-    // Der Zug, ein Shinkansen beschleunigt vo 0 auf eine mittlere Geschwindigkeit von 80m/s.
+    // Der Zug, ein Shinkansen beschleunigt von 0 auf eine mittlere Geschwindigkeit von 80m/s.
     // Das Monitorgerät soll aus der Geschwindigkeit die aktuelle Position berechnen;
     // Geschwindigkeits- und Positionsverlauf anzeigen.
     Drive_Train(TestSet::counter, TestSet::samples, Monitor_TrainDrive);
@@ -150,13 +150,13 @@ public:
     // Filtere die Geschwindigkeit
     double Filter_Velocity();
 
-    // Brechne den Weg
+    // Berechne den Weg
     double Calculate_Position();
 
     // Plotte eine Weg-Zeit-Übersicht und den Geschwindigkeitsverlauf
     void Plot(std::size_t& iter);
     
-    // Siche die Daten in einer Datei
+    // Sichere die Daten in einer Datei
     void Store(std::size_t& iter);
 
 private:
@@ -252,7 +252,7 @@ int main(int, char**)
 
 ### <span id="link6">2.6. Definiere alle Funktionen</span>
 
-*Beim Innausbau erstellt jedes Gewerk seine Einrichungen, der Installateur verlegt die Fussbodenheizung, der Elektriker die Kabel. 
+*Beim Innausbau erstellt jedes Gewerk seine Einrichtungen, der Installateur verlegt die Fußbodenheizung, der Elektriker die Kabel. 
 Analog implementiert der Softwerker seine Funktionen*
 
 Die Implementierung der neuen Schnittstelle erfolgt in kompakter funktionsorientierter Form, für Schleifen werden Funktionen gewählt - siehe Beispiele:
@@ -335,7 +335,7 @@ double Device::Calculate_Position()
 *Jedes Gewerk prüft seine Einrichtungen, der Elektriker prüft seine Schaltungen, der Softwerker seine Funktionen*
 *Deutsches Handwerk kommt von können, nicht von schauen wir mal, basteln wir uns ein Haus* :satisfied:
 
-Debuggen durh die Applikation:
+Debuggen durch die Applikation:
 
 ![Debug-Image](./images/debug_view.png)
 
@@ -371,7 +371,7 @@ Der Mittelwertfilter liefert bereits ein brauchbares Ergebnis. :satisfied:
 
 ## 4. Unit-Test
 
-*Am Ende steht die Abhame, der Elektromeister prüft die Isolationswiderstände, der Bauleiter das gesamte Haus.*
+*Am Ende steht die Abnahme, der Elektromeister prüft die Isolationswiderstände, der Bauleiter das gesamte Haus.*
 *Der Softwerker prüft seine Arbeit durch Unit-Tests.*
 
 Für die Unit-Tests wird GoogleTest verwendet, welches auch durch CTest ausgeführt werden kann.
@@ -382,8 +382,7 @@ Für die Unit-Tests wird GoogleTest verwendet, welches auch durch CTest ausgefü
 
 ## 5. Versionsmanagement mit Git
 
-Git hilft einem bei der schrittweisen Entwicklung. Jeder Entwicklungsschritt wird gesichert. Später ermöglicht es einem,
-die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichter auf einem früheren Entwicklungschritte zrückwechseln.
+Git hilft einem bei der schrittweisen Entwicklung. Jeder Entwicklungsschritt wird gesichert. Später ermöglicht es einem, die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichter auf einem früheren Entwicklungsschritte zurückwechseln.
 
 ![Debug-Image](./images/git_view.png)
 
@@ -391,7 +390,7 @@ die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichte
 
 ## 6. Fazit und Ausblick
 
-Das PT2 zeigt eine gute Modellierung der Zugdynamik. Die PT2-Messung zeigt beim Ruck, bei ca. 180s eine Unstetigkeitsstelle und damit ein mögliches Komfortproblem. Deshalb ist es angebracht, die Rampe durch ein PT1 zu ersetzen. Der gleitende Mittelwertfilfilter zeigt im stationären Bereich eine brauchbares Verhalten, aber im instationären Bereich sind deutlich Stufen in der Geschwindigkeit (Übertragungsfunktion) zu erkennen. Wie wäre es, dafür ein Kalmanfilter zu verwenden.
+Das PT2 zeigt eine gute Modellierung der Zugdynamik. Die PT2-Messung zeigt beim Ruck, bei ca. 180s eine Unstetigkeitsstelle und damit ein mögliches Komfortproblem. Deshalb ist es angebracht, die Rampe durch ein PT1 zu ersetzen. Der gleitende Mittelwertfilter zeigt im stationären Bereich ein brauchbares Verhalten, aber im instationären Bereich sind deutlich Stufen in der Geschwindigkeit (Übertragungsfunktion) zu erkennen. Wie wäre es, dafür ein Kalmanfilter zu verwenden.
 
 <br>
 
