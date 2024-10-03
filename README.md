@@ -42,10 +42,10 @@ Datei main.cpp:
 
 #define Drive_Train for_each_iter
 
-//Erstelle Device und lege Parameter fest
+// Erstelle Device und lege Parameter fest
 namespace TestSet
 {
-	// ...
+    // ...
     
     // Das Objekt
     Device device { velocity_target, velocity_stddev, 
